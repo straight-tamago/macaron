@@ -26,7 +26,7 @@
 	[self.titleLabel.centerYAnchor constraintEqualToAnchor:self.navigationItem.titleView.centerYAnchor].active = YES;
 
     self.iconView = [[UIImageView alloc] init];
-	self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/Rena.bundle/icon.png"];
+	self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/macaron.bundle/icon.png"];
     self.iconView.contentMode = UIViewContentModeScaleAspectFit;
 	self.iconView.alpha = 0.0;
     [self.navigationItem.titleView addSubview:self.iconView];
@@ -55,7 +55,7 @@
 }
 
 - (void)respring:(id)sender {
-    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.sugiuta.rena/respring"), NULL, NULL, YES);
+    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.misakateam.macaron/respring"), NULL, NULL, YES);
 }
 
 - (void)openGithub {
