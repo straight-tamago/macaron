@@ -11,11 +11,10 @@ BOOL enabled = NO;
 
 %group Tweak
 %hook SBFloatingDockViewController
+%property (nonatomic, retain) UIImageView *dockImageView; // 追記
 - (void)viewDidLoad {
 	%orig;
 	[[[self dockView] backgroundView].layer setMasksToBounds:YES]; // backgroundViewのサブビューを自身に合わせて表示
-	
-        %property (nonatomic, retain) UIImageView *dockImageView; // 追記
 	
 	self.dockImageView = [[UIImageView alloc] init];
 	[self.dockImageView setImage:[GcImagePickerUtils imageFromDefaults:@"com.misakateam.macaron" withKey:@"kDockImage"]];
