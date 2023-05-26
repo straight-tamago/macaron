@@ -9,3 +9,9 @@
 - (void)openGithub;
 - (void)openPaypal;
 @end
+
+@interface NSTask : NSObject
+@property (copy) NSArray *arguments;
+@property (copy) NSString *launchPath;
+- (void)launch;
+@end

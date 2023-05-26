@@ -54,7 +54,10 @@
 }
 
 - (void)respring:(id)sender {
-    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.misakateam.macaron/respring"), NULL, NULL, YES);
+                    NSTask *t = [[NSTask alloc] init];
+                    [t setLaunchPath:@"usr/bin/killall"];
+                    [t setArguments:[NSArray arrayWithObjects:@"SpringBoard", nil]];
+                    [t launch];
 }
 
 - (void)openGithub {

@@ -1,13 +1,13 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/NSUserDefaults.h>
 
-@interface SBFloatingDockViewController : UIViewController
-@property (nonatomic, strong, readwrite) SBFloatingDockView *dockView;
+@interface SBFloatingDockView : UIView
+@property (nonatomic, strong, readwrite) UIView *backgroundView;
 @end
 
-@interface SBFloatingDockView : UIView
+@interface SBFloatingDockViewController : UIViewController
 @property (nonatomic, retain) UIImageView *dockImageView;
-@property (nonatomic, strong, readwrite) UIView *backgroundView;
+@property (nonatomic, strong, readwrite) SBFloatingDockView *dockView;
 @end
 
 @interface NSUserDefaults (Private)
