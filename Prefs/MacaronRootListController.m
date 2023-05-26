@@ -26,7 +26,7 @@
 	[self.titleLabel.centerYAnchor constraintEqualToAnchor:self.navigationItem.titleView.centerYAnchor].active = YES;
 
     self.iconView = [[UIImageView alloc] init];
-	self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/macaron.bundle/icon.png"];
+	self.iconView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/Macaron.bundle/icon.png"];
     self.iconView.contentMode = UIViewContentModeScaleAspectFit;
 	self.iconView.alpha = 0.0;
     [self.navigationItem.titleView addSubview:self.iconView];
