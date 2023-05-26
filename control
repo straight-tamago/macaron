@@ -1,0 +1,11 @@
+Package: com.misakateam.macaron
+Name: Macaron
+Version: 1.0.0
+Architecture: iphoneos-arm
+Depiction: https://sugiuta.github.io/descriptions/index.html?p=com.misakateam.macaron
+Description: An awesome MobileSubstrate tweak!
+Maintainer: Misaka Team
+Author: Misaka Team
+Section: Tweaks
+Depends: mobilesubstrate, preferenceloader, com.mrgcgamer.libgcuniversal
+Icon: https://sugiuta.github.io/descriptions/com.misakateam.macaron/Macaron.png
