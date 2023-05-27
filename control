@@ -3,7 +3,7 @@ Name: Macaron
 Version: 1.0.0
 Architecture: iphoneos-arm
 Description: Displays a photo in the background of the dock for iOS15.
-Maintainer: Misaka Team
-Author: Misaka Team
+Maintainer: Misaka Project
+Author: Misaka Project
 Section: Tweaks
 Depends: mobilesubstrate, preferenceloader, com.mrgcgamer.libgcuniversal
