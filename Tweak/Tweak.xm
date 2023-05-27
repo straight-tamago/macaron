@@ -15,7 +15,7 @@ BOOL enabled = NO;
 - (void)viewDidLoad {
 	%orig;
 	[[[self dockView] backgroundView].layer setMasksToBounds:YES]; // backgroundViewのサブビューを自身に合わせて表示
-	
+
 	self.dockImageView = [[UIImageView alloc] init];
 	[self.dockImageView setImage:[GcImagePickerUtils imageFromDefaults:@"com.misakateam.macaron" withKey:@"kDockImage"]];
 	[self.dockImageView setContentMode:UIViewContentModeScaleAspectFill]; // アスペクトを維持したままViewに全体表示

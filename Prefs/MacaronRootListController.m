@@ -54,14 +54,15 @@
 }
 
 - (void)respring:(id)sender {
-                    NSTask *t = [[NSTask alloc] init];
-                    [t setLaunchPath:@"usr/bin/killall"];
-                    [t setArguments:[NSArray arrayWithObjects:@"SpringBoard", nil]];
-                    [t launch];
+	// Rootlessだとkillallのディレクトリが違うので注意が必要。
+    pid_t pid;
+    const char* args[] = {"killall", "SpringBoard", NULL};
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/killall"]) posix_spawn(&pid, "usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
+    else posix_spawn(&pid, "/var/jb/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
 }
 
 - (void)openGithub {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://sugiuta.github.io/repo/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/shimajiron/macaron"]];
 }
 
 - (void)openPaypal {
