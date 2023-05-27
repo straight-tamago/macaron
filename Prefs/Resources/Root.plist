@@ -14,13 +14,13 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>com.misakateam.macaron</string>
+			<string>com.misakaproject.macaron</string>
 			<key>key</key>
 			<string>kEnabled</string>
 			<key>label</key>
 			<string>Enabled</string>
 			<key>PostNotification</key>
-			<string>com.misakateam.macaron/ReloadPrefs</string>
+			<string>com.misakaproject.macaron/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -30,7 +30,7 @@
 			<key>label</key>
 			<string>Dock image</string>
 			<key>defaults</key>
-			<string>com.misakateam.macaron</string>
+			<string>com.misakaproject.macaron</string>
 			<key>key</key>
 			<string>kDockImage</string>
 			<key>usesPhotos</key>
@@ -38,7 +38,7 @@
 			<key>usesVideos</key>
 			<false/>
 			<key>PostNotification</key>
-			<string>com.misakateam.macaron/ReloadPrefs</string>
+			<string>com.misakaproject.macaron/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -46,7 +46,7 @@
 			<key>label</key>
 			<string>Profile</string>
 			<key>footerText</key>
-			<string>©️Misaka Team 2023 - Macaron</string>
+			<string>©️Misaka Project 2023 - Macaron</string>
 		</dict>
 		<dict>
 			<key>cell</key>

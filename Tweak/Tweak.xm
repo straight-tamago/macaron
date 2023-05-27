@@ -16,7 +16,7 @@ BOOL enabled = NO;
 - (void)viewDidLoad {
 	%orig;
 	[[[self dockView] backgroundView].layer setMasksToBounds:YES]; // backgroundViewのサブビューを自身に合わせて表示
-	NSData *data = [GcImagePickerUtils dataFromDefaults: @"com.misakateam.macaron" withKey: @"kDockImage"]; //画像をNSDataで読み込む
+	NSData *data = [GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"]; //画像をNSDataで読み込む
 	const unsigned char *dataBuffer = (const unsigned char *)[data bytes];
 
 	if ((unsigned long)dataBuffer[0] == 71 &&
@@ -45,11 +45,11 @@ BOOL enabled = NO;
 
 static void loadPreferences() {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	enabled = ([defaults objectForKey:@"kEnabled" inDomain:@"com.misakateam.macaron"] != nil) ? [[defaults objectForKey:@"kEnabled" inDomain:@"com.misakateam.macaron"] boolValue] : NO;
+	enabled = ([defaults objectForKey:@"kEnabled" inDomain:@"com.misakaproject.macaron"] != nil) ? [[defaults objectForKey:@"kEnabled" inDomain:@"com.misakaproject.macaron"] boolValue] : NO;
 }
 
 %ctor {
 	loadPreferences();
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)loadPreferences, (CFStringRef)@"com.misakateam.macaron/ReloadPrefs", NULL, CFNotificationSuspensionBehaviorCoalesce);
+	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)loadPreferences, (CFStringRef)@"com.misakaproject.macaron/ReloadPrefs", NULL, CFNotificationSuspensionBehaviorCoalesce);
     if (enabled) %init(Tweak);
 }
