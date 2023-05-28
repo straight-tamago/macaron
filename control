@@ -6,4 +6,4 @@ Description: Displays a photo in the background of the dock for iOS15.
 Maintainer: Misaka Project
 Author: Misaka Project
 Section: Tweaks
-Depends: mobilesubstrate, preferenceloader, com.mrgcgamer.libgcuniversal
+Depends: mobilesubstrate, preferenceloader, com.mrgcgamer.libgcuniversal, ws.hbang.common

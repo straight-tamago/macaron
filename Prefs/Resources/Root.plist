@@ -54,7 +54,7 @@
 			<key>label</key>
 			<string>GitHub</string>
 			<key>icon</key>
-			<string>/Library/PreferenceBundles/Macaron.bundle/icon/github.png</string>
+			<string>icon/github.png</string>
 			<key>action</key>
 			<string>openGithub</string>
 		</dict>
@@ -62,7 +62,7 @@
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>icon</key>
-			<string>/Library/PreferenceBundles/Macaron.bundle/icon/paypal.png</string>
+			<string>icon/paypal.png</string>
 			<key>label</key>
 			<string>Donate via PayPal</string>
 			<key>action</key>

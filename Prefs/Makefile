@@ -5,7 +5,7 @@ $(BUNDLE_NAME)_CFLAGS = -fobjc-arc -Wno-deprecated-declarations
 $(BUNDLE_NAME)_LIBRARIES = gcuniversal
 $(BUNDLE_NAME)_FRAMEWORKS = UIKit
 $(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences
-# $(BUNDLE_NAME)_EXTRA_FRAMEWORKS =
+$(BUNDLE_NAME)_EXTRA_FRAMEWORKS += Cephei CepheiPrefs
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/bundle.mk

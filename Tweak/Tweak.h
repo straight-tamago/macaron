@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
-#import <Foundation/NSUserDefaults.h>
+#import <GcUniversal/GcImagePickerUtils.h>
+#import <Cephei/HBPreferences.h>
 #import "Classes/FLAnimatedImage.h"
 
 @interface SBFloatingDockView : UIView
@@ -9,9 +10,4 @@
 @interface SBFloatingDockViewController : UIViewController
 @property (nonatomic, retain) FLAnimatedImageView *dockImageView;
 @property (nonatomic, strong, readwrite) SBFloatingDockView *dockView;
-@end
-
-@interface NSUserDefaults (Private)
-- (id)objectForKey:(NSString *)key inDomain:(NSString *)domain;
-- (void)setObject:(id)value forKey:(NSString *)key inDomain:(NSString *)domain;
 @end
