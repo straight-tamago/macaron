@@ -7,8 +7,7 @@
 @end
 
 @interface SBFloatingDockViewController : UIViewController
-@property (nonatomic, retain) FLAnimatedImageView *dockImageView_GIF;
-@property (nonatomic, retain) UIImageView *dockImageView;
+@property (nonatomic, retain) FLAnimatedImageView *dockImageView;
 @property (nonatomic, strong, readwrite) SBFloatingDockView *dockView;
 @end
 
