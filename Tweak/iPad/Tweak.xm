@@ -30,7 +30,9 @@ BOOL enabled = NO;
 %end
 
 %ctor {
-	if ([[[UIDevice currentDevice] model] isEqualToString:@"iPhone"]) return;
+	// FloatingDockXVI
+	if ([[[UIDevice currentDevice] model] isEqualToString:@"iPhone"] && ![[NSFileManager defaultManager] fileExistsAtPath:ROOT_PATH_NS(@"/Library/MobileSubstrate/DynamicLibraries/FloatingDockXVI.dylib")]) return;
+
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.misakaproject.macaron"];
 	[preferences registerBool:&enabled default:NO forKey:@"kEnabled"];
 	if (enabled) %init(Tweak);
