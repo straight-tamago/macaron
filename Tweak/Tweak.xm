@@ -35,8 +35,8 @@ BOOL enabled = NO;
 	}
 	else if ([modelName isEqualToString:@"iPad"]) {
 		// iPad の場合
-	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.misakaproject.macaron"];
-    [preferences registerBool:&enabled default:NO forKey:@"kEnabled"];
-    if (enabled) %init(Tweak);
+		preferences = [[HBPreferences alloc] initWithIdentifier:@"com.misakaproject.macaron"];
+    		[preferences registerBool:&enabled default:NO forKey:@"kEnabled"];
+    		if (enabled) %init(Tweak);
 	}
 }
