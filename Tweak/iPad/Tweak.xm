@@ -12,6 +12,7 @@ BOOL enabled = NO;
 %property (nonatomic, retain) FLAnimatedImageView *dockImageView; // 追記
 - (void)viewDidLoad {
 	%orig;
+
 	[[[self dockView] backgroundView].layer setMasksToBounds:YES]; // backgroundViewのサブビューを自身に合わせて表示
 	NSData *data = ([GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] != nil) ? [GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] : [NSData dataWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/default.png")]; //画像をNSDataで読み込む
 	const unsigned char *dataBuffer = (const unsigned char *)[data bytes];
@@ -29,7 +30,8 @@ BOOL enabled = NO;
 %end
 
 %ctor {
+	if ([[[UIDevice currentDevice] model] isEqualToString:@"iPhone"]) return;
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.misakaproject.macaron"];
-    [preferences registerBool:&enabled default:NO forKey:@"kEnabled"];
-    if (enabled) %init(Tweak);
+	[preferences registerBool:&enabled default:NO forKey:@"kEnabled"];
+	if (enabled) %init(Tweak);
 }

@@ -3,7 +3,7 @@ KILL ?= 0
 ROOTLESS ?= 0
 
 ifeq ($(HOST),0)
-	THEOS_DEVICE_IP = 192.168.10.7
+	THEOS_DEVICE_IP = 192.168.3.116
 else
 	THEOS_DEVICE_IP = 127.0.0.1
 	export THEOS_DEVICE_PORT = 2222
@@ -20,7 +20,7 @@ export ARCHS = arm64 arm64e
 export SYSROOT = $(THEOS)/sdks/iPhoneOS14.5.sdk
 export TARGET = iphone:clang:latest:15.0
 
-SUBPROJECTS += Tweak Prefs
+SUBPROJECTS += Tweak/iPhone Tweak/iPad Prefs
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk

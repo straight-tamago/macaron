@@ -1,5 +1,5 @@
-TWEAK_NAME = Macaron
-$(TWEAK_NAME)_FILES = Tweak.xm $(wildcard Classes/*.m)
+TWEAK_NAME = MacaroniPhone
+$(TWEAK_NAME)_FILES = Tweak.xm $(wildcard ../Classes/*.m)
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc -Wno-deprecated-declarations
 $(TWEAK_NAME)_LIBRARIES = gcuniversal
 $(TWEAK_NAME)_FRAMEWORKS += UIKit Foundation
