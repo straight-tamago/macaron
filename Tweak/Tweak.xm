@@ -29,7 +29,14 @@ BOOL enabled = NO;
 %end
 
 %ctor {
+	NSString *modelName = [[UIDevice currentDevice] model];
+	if ([modelName isEqualToString:@"iPhone"]) {
+		// iPhoneの場合
+	}
+	else if ([modelName isEqualToString:@"iPad"]) {
+		// iPad の場合
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.misakaproject.macaron"];
     [preferences registerBool:&enabled default:NO forKey:@"kEnabled"];
     if (enabled) %init(Tweak);
+	}
 }
