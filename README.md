@@ -1,5 +1,6 @@
 # macaron
 Displays a photo in the background of the dock for iOS15.
+(gif compatible)
 
 ## Compatibility
 iPhone & iPad running iOS15 or later
