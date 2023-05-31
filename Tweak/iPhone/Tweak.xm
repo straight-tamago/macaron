@@ -21,8 +21,8 @@ BOOL enabled = NO;
 	[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 
 	if (self.dockImageView != nil) {
+                self.visualEffectView.frame = self.dockImageView.bounds; 
 		[self.dockImageView setFrame:self.backgroundView.bounds];
-		self.visualEffectView.frame = self.dockImageView.bounds; 
 		return;
 	}
 
