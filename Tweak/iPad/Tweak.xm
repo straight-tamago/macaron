@@ -17,6 +17,17 @@ BOOL enabled = NO;
 	NSData *data = ([GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] != nil) ? [GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] : [NSData dataWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/default.png")]; //画像をNSDataで読み込む
 	const unsigned char *dataBuffer = (const unsigned char *)[data bytes];
 	self.dockImageView = [[FLAnimatedImageView alloc] init]; // 初期化
+	
+// Blur
+UIVisualEffect *blurEffect;
+blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+UIVisualEffectView *visualEffectView;
+visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+visualEffectView.frame = self.dockImageView.bounds; 
+[visualEffectView setClipsToBounds:YES];
+[visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+[self.dockImageView addSubview:visualEffectView];
+
 
 	if ((unsigned long)dataBuffer[0] == 71 && (unsigned long)dataBuffer[1] == 73 && (unsigned long)dataBuffer[2] == 70) [self.dockImageView setAnimatedImage:[FLAnimatedImage animatedImageWithGIFData:data]]; // 画像を設定する
 	else [self.dockImageView setImage:[UIImage imageWithData:data]]; // 画像を設定する
