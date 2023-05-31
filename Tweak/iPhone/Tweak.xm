@@ -10,13 +10,24 @@ BOOL enabled = NO;
 %group Tweak
 %hook SBDockView
 %property (nonatomic, retain) FLAnimatedImageView *dockImageView; // 追記
+%property (nonatomic, retain) UIVisualEffectView *visualEffectView; // 追記
 - (void)layoutSubviews {
 	%orig;
 
+	UIVisualEffect *blurEffect;
+	blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+	self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+	[self.visualEffectView setClipsToBounds:YES];
+	[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+
 	if (self.dockImageView != nil) {
 		[self.dockImageView setFrame:self.backgroundView.bounds];
+		self.visualEffectView.frame = self.dockImageView.bounds; 
 		return;
 	}
+
+	// Blur
+	[self.dockImageView addSubview:self.visualEffectView];
 
 	[[self backgroundView].layer setMasksToBounds:YES]; // backgroundViewのサブビューを自身に合わせて表示
 	NSData *data = ([GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] != nil) ? [GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] : [NSData dataWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/default.png")]; //画像をNSDataで読み込む
