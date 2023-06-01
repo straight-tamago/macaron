@@ -31,7 +31,12 @@ BOOL enabled = NO;
 	[[self dockView].backgroundView addSubview:self.dockImageView];
 
 	// self.visualEffectView
-	UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+        NSString *blurType = [preferences stringForKey:@"kBlurType"];
+        UIBlurEffectStyle blurStyle = UIBlurEffectStyleRegular;
+        if ([blurType isEqualToString:@"Dark"]) blurStyle = UIBlurEffectStyleRegular;
+        else if ([blurType isEqualToString:@"clear"]) blurStyle = UIBlurEffectStyleExtraLight;
+        else blurStyle = UIBlurEffectStyleProminent;
+        UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:blurStyle];
 	self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 	[self.visualEffectView setClipsToBounds:YES];
 	[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
