@@ -54,6 +54,26 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>label</key>
+			<string>Blur Type</string>
+			<key>defaults</key>
+			<string>com.misakaproject.macaron</string>
+			<key>key</key>
+			<string>kBlurType</string>
+			<key>validTitles</key>
+			<array>
+				<string>Clear</string>
+				<string>Dark</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<string>Clear</string>
+				<string>Dark</string>
+			</array>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Profile</string>
