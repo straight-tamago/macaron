@@ -57,19 +57,23 @@
 			<string>PSSegmentCell</string>
 			<key>label</key>
 			<string>Blur Type</string>
+			<key>default</key>
+			<string>nil</string>
 			<key>defaults</key>
 			<string>com.misakaproject.macaron</string>
 			<key>key</key>
 			<string>kBlurType</string>
 			<key>validTitles</key>
 			<array>
-				<string>Clear</string>
-				<string>Dark</string>
+				<string>Not set</string>
+				<string>UIBlurEffectStyleRegular</string>
+				<string>UIBlurEffectStyleProminent</string>
 			</array>
 			<key>validValues</key>
 			<array>
-				<string>Clear</string>
-				<string>Dark</string>
+				<string>Not set</string>
+				<string>UIBlurEffectStyleRegular</string>
+				<string>UIBlurEffectStyleProminent</string>
 			</array>
 		</dict>
 		<dict>

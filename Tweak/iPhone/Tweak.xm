@@ -37,11 +37,17 @@ BOOL enabled = NO;
 	[self.backgroundView addSubview:self.dockImageView];
 
 	// self.visualEffectView
-	UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-	self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-	[self.visualEffectView setClipsToBounds:YES];
-	[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[self.dockImageView addSubview:self.visualEffectView];
+	NSString *blurType = [preferences objectForKey:@"kBlurType"];
+	UIBlurEffectStyle blurStyle = nil;
+	if ([blurType isEqualToString:@"UIBlurEffectStyleRegular"]) blurStyle = UIBlurEffectStyleRegular;
+	else if ([blurType isEqualToString:@"UIBlurEffectStyleProminent"]) blurStyle = UIBlurEffectStyleProminent;
+	if (blurStyle) {
+		UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:blurStyle];
+		self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+		[self.visualEffectView setClipsToBounds:YES];
+		[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[self.dockImageView addSubview:self.visualEffectView];
+	}
 }
 %end
 %end

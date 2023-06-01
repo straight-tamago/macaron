@@ -31,15 +31,17 @@ BOOL enabled = NO;
 	[[self dockView].backgroundView addSubview:self.dockImageView];
 
 	// self.visualEffectView
-        NSString *blurType = [preferences stringForKey:@"kBlurType"];
-        UIBlurEffectStyle blurStyle = UIBlurEffectStyleRegular;
-        if ([blurType isEqualToString:@"UIBlurEffectStyleRegular"]) blurStyle = UIBlurEffectStyleRegular;
-        else if ([blurType isEqualToString:@"UIBlurEffectStyleProminent"]) blurStyle = UIBlurEffectStyleProminent;
-        UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:blurStyle];
-	self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-	[self.visualEffectView setClipsToBounds:YES];
-	[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[self.dockImageView addSubview:self.visualEffectView];
+	NSString *blurType = [preferences objectForKey:@"kBlurType"];
+	UIBlurEffectStyle blurStyle = nil;
+	if ([blurType isEqualToString:@"UIBlurEffectStyleRegular"]) blurStyle = UIBlurEffectStyleRegular;
+	else if ([blurType isEqualToString:@"UIBlurEffectStyleProminent"]) blurStyle = UIBlurEffectStyleProminent;
+	if (blurStyle) {
+		UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:blurStyle];
+		self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+		[self.visualEffectView setClipsToBounds:YES];
+		[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		[self.dockImageView addSubview:self.visualEffectView];
+	}
 }
 %end
 %end
