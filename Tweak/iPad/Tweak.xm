@@ -33,9 +33,8 @@ BOOL enabled = NO;
 	// self.visualEffectView
         NSString *blurType = [preferences stringForKey:@"kBlurType"];
         UIBlurEffectStyle blurStyle = UIBlurEffectStyleRegular;
-        if ([blurType isEqualToString:@"Dark"]) blurStyle = UIBlurEffectStyleRegular;
-        else if ([blurType isEqualToString:@"clear"]) blurStyle = UIBlurEffectStyleExtraLight;
-        else blurStyle = UIBlurEffectStyleProminent;
+        if ([blurType isEqualToString:@"UIBlurEffectStyleRegular"]) blurStyle = UIBlurEffectStyleRegular;
+        else if ([blurType isEqualToString:@"UIBlurEffectStyleProminent"]) blurStyle = UIBlurEffectStyleProminent;
         UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:blurStyle];
 	self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 	[self.visualEffectView setClipsToBounds:YES];
