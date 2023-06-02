@@ -71,9 +71,9 @@
 			</array>
 			<key>validValues</key>
 			<array>
-				<string>Not set</string>
-				<string>UIBlurEffectStyleRegular</string>
-				<string>UIBlurEffectStyleProminent</string>
+				<string>0</string>
+				<string>1</string>
+				<string>2</string>
 			</array>
 		</dict>
 		<dict>
