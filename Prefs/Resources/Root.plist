@@ -58,16 +58,16 @@
 			<key>label</key>
 			<string>Blur Type</string>
 			<key>default</key>
-			<string>Not set</string>
+			<string>0</string>
 			<key>defaults</key>
 			<string>com.misakaproject.macaron</string>
 			<key>key</key>
 			<string>kBlurType</string>
 			<key>validTitles</key>
 			<array>
-				<string>Not set</string>
-				<string>UIBlurEffectStyleRegular</string>
-				<string>UIBlurEffectStyleProminent</string>
+				<string>OFF</string>
+				<string>Regular</string>
+				<string>Light Regular</string>
 			</array>
 			<key>validValues</key>
 			<array>
@@ -108,7 +108,7 @@
 			<key>label</key>
 			<string>Discord</string>
 			<key>subtitle</key>
-			<string>misakaProject</string>
+			<string>Misaka Project</string>
 			<key>url</key>
 			<string>https://discord.gg/bbJAqj7np5</string>
 		</dict>

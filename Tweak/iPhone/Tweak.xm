@@ -38,16 +38,14 @@ BOOL enabled = NO;
 
 	// self.visualEffectView
 	NSString *blurType = [preferences objectForKey:@"kBlurType"];
-	UIBlurEffectStyle blurStyle = nil;
-	if ([blurType isEqualToString:@"1"]) blurStyle = UIBlurEffectStyleRegular;
-	else if ([blurType isEqualToString:@"2"]) blurStyle = UIBlurEffectStyleProminent;
-	if (blurStyle) {
-		UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:blurStyle];
+	if ([blurType isEqualToString:@"1"] || [blurType isEqualToString:@"2"]) {
+		UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 		self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+		if ([blurType isEqualToString:@"2"]) [self.visualEffectView setAlpha:0.5];
 		[self.visualEffectView setClipsToBounds:YES];
 		[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 		[self.dockImageView addSubview:self.visualEffectView];
-	}
+	};
 }
 %end
 %end
