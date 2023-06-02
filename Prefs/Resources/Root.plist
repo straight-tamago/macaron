@@ -58,7 +58,7 @@
 			<key>label</key>
 			<string>Blur Type</string>
 			<key>default</key>
-			<string>nil</string>
+			<string>Not set</string>
 			<key>defaults</key>
 			<string>com.misakaproject.macaron</string>
 			<key>key</key>
