@@ -33,8 +33,8 @@ BOOL enabled = NO;
 	// self.visualEffectView
 	NSString *blurType = [preferences objectForKey:@"kBlurType"];
 	UIBlurEffectStyle blurStyle = nil;
-	if ([blurType isEqualToString:@"UIBlurEffectStyleRegular"]) blurStyle = UIBlurEffectStyleRegular;
-	else if ([blurType isEqualToString:@"UIBlurEffectStyleProminent"]) blurStyle = UIBlurEffectStyleProminent;
+	if ([blurType isEqualToString:@"1"]) blurStyle = UIBlurEffectStyleRegular;
+	else if ([blurType isEqualToString:@"2"]) blurStyle = UIBlurEffectStyleProminent;
 	if (blurStyle) {
 		UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:blurStyle];
 		self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
