@@ -2,7 +2,7 @@
 Displays a photo in the background of the dock for iOS15.
 (gif compatible)
 
-![Macaron](https://github.com/straight-tamago/macaron/assets/50686545/bb0eed1c-90b2-4428-be0a-a71242336f9b)
+![Macaron](https://github.com/straight-tamago/macaron/assets/50686545/97e87c2c-8d20-457a-bb02-b52353c21d5c)
 
 ## Compatibility
 iPhone & iPad running iOS15 or later
