@@ -128,7 +128,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Credit</string>
+			<string>Developer</string>
 			<key>footerText</key>
 			<string>©️Misaka Project 2023 - Macaron</string>
 		</dict>
