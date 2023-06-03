@@ -6,6 +6,8 @@ HBPreferences *preferences;
 
 //prefs
 BOOL enabled = NO;
+NSInteger blurType = 0;
+CGFloat blurAlpha = 1.0;
 
 %group Tweak
 %hook SBDockView
@@ -16,7 +18,7 @@ BOOL enabled = NO;
 
 	if (self.dockImageView != nil) {
 		[self.dockImageView setFrame:self.backgroundView.bounds];
-		[self.visualEffectView setFrame:self.backgroundView.bounds];
+		[self.visualEffectView setFrame:self.dockImageView.bounds];
 		return;
 	}
 
@@ -37,15 +39,13 @@ BOOL enabled = NO;
 	[self.backgroundView addSubview:self.dockImageView];
 
 	// self.visualEffectView
-	NSString *blurType = [preferences objectForKey:@"kBlurType"];
-	if ([blurType isEqualToString:@"1"] || [blurType isEqualToString:@"2"]) {
-		UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
-		self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-		if ([blurType isEqualToString:@"2"]) [self.visualEffectView setAlpha:0.5];
-		[self.visualEffectView setClipsToBounds:YES];
-		[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[self.dockImageView addSubview:self.visualEffectView];
-	};
+	if (blurType == 0) return;
+	UIBlurEffect *blurEffect = (blurType == 1) ? [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular] : (blurType == 2) ? [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight] : [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+	self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+	[self.visualEffectView setAlpha:blurAlpha];
+	[self.visualEffectView setClipsToBounds:YES];
+	[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+	[self.dockImageView addSubview:self.visualEffectView];
 }
 %end
 %end
@@ -59,5 +59,7 @@ BOOL enabled = NO;
 
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.misakaproject.macaron"];
 	[preferences registerBool:&enabled default:NO forKey:@"kEnabled"];
+	[preferences registerInteger:&blurType default:0 forKey:@"kBlurType"];
+	[preferences registerFloat:&blurAlpha default:1.0 forKey:@"kBlurAlpha"];
 	if (enabled) %init(Tweak);
 }
