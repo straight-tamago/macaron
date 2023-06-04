@@ -16,38 +16,64 @@
 	appearanceSettings.tintColor = defaultColor;
 	appearanceSettings.navigationBarBackgroundColor = [UIColor clearColor];
 	appearanceSettings.tableViewCellSeparatorColor = [UIColor clearColor];
+	appearanceSettings.largeTitleStyle = 1;
 	self.hb_appearanceSettings = appearanceSettings;
 
     self.respringButton = [[UIBarButtonItem alloc] initWithTitle:@"Respring" style:UIBarButtonItemStylePlain target:self action:@selector(respring:)];
     self.respringButton.tintColor = [UIColor secondaryLabelColor];
     self.navigationItem.rightBarButtonItem = self.respringButton;
 
-	self.navigationItem.titleView = [UIView new];
+	self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
+	[self.headerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 
-    self.iconView = [[UIImageView alloc] init];
-	self.iconView.image = [UIImage imageWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/icon.png")];
-    self.iconView.contentMode = UIViewContentModeScaleAspectFit;
-	self.iconView.alpha = 0.0;
-    [self.navigationItem.titleView addSubview:self.iconView];
+	self.stackView = [[UIStackView alloc] init];
+	[self.stackView setAlpha:0.0];
+    [self.stackView setAxis:UILayoutConstraintAxisHorizontal];
+    [self.stackView setAlignment:UIStackViewAlignmentCenter];
+    [self.stackView setDistribution:UIStackViewDistributionEqualSpacing];
+    [self.headerView addSubview:self.stackView];
 
-	[self.iconView setTranslatesAutoresizingMaskIntoConstraints:NO];
-	[self.iconView.centerXAnchor constraintEqualToAnchor:self.navigationItem.titleView.centerXAnchor].active = YES;
-	[self.iconView.centerYAnchor constraintEqualToAnchor:self.navigationItem.titleView.centerYAnchor].active = YES;
+	[self.stackView setTranslatesAutoresizingMaskIntoConstraints:NO];
+	[NSLayoutConstraint activateConstraints:@[
+		[self.stackView.topAnchor constraintEqualToAnchor:self.headerView.topAnchor],
+		[self.stackView.leftAnchor constraintEqualToAnchor:self.headerView.leftAnchor constant:30],
+		[self.stackView.rightAnchor constraintEqualToAnchor:self.headerView.rightAnchor constant:-30],
+		[self.stackView.bottomAnchor constraintEqualToAnchor:self.headerView.bottomAnchor],
+	]];
 
-	[self.iconView sizeToFit];
+	self.iconView= [[UIImageView alloc] init];
+    [self.iconView setFrame:CGRectMake(0, 0, 60, 60)];
+	[self.iconView setImage:[UIImage imageWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/icon.png")]];
+    [self.iconView setContentMode:UIViewContentModeScaleAspectFit];
+    [self.stackView addArrangedSubview:self.iconView];
+
+	self.titleLabel = [[UILabel alloc] init];
+    [self.titleLabel setText:@"Macaron"];
+    [self.titleLabel setFont:[UIFont monospacedDigitSystemFontOfSize:40 weight:UIFontWeightBold]];
+    [self.titleLabel setTextColor:[UIColor labelColor]];
+	[self.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.stackView addArrangedSubview:self.titleLabel];
+	[self.titleLabel sizeToFit];
+
+	self.versionLabel = [[UILabel alloc] init];
+    [self.versionLabel setText:@"v1.0.0"];
+    [self.versionLabel setFont:[UIFont monospacedDigitSystemFontOfSize:30 weight:UIFontWeightBold]];
+    [self.versionLabel setTextColor:[UIColor secondaryLabelColor]];
+	[self.versionLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.stackView addArrangedSubview:self.versionLabel];
+	[self.versionLabel sizeToFit];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  CGFloat const offsetY = scrollView.contentOffset.y;
-  if (offsetY > 100) {
-    [UIView animateWithDuration:0.2 animations:^{
-		self.iconView.alpha = 1.0;
-	}];
-  } else {
-    [UIView animateWithDuration:0.2 animations:^{
-		self.iconView.alpha = 0.0;
-	}];
-  }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^ {
+        [self.stackView setAlpha:1.0];
+    } completion:nil];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    tableView.tableHeaderView = self.headerView;
+    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (void)respring:(id)sender {
