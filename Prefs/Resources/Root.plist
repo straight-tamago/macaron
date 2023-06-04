@@ -6,18 +6,6 @@
 	<array>
 		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>condensed</key>
-			<true/>
-			<key>headerCellClass</key>
-			<string>HBPackageNameHeaderCell</string>
-			<key>icon</key>
-			<string>icon.png</string>
-			<key>packageIdentifier</key>
-			<string>com.misakaproject.macaron</string>
-		</dict>
-		<dict>
-			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>cellClass</key>
 			<string>PSSubtitleSwitchTableCell</string>
