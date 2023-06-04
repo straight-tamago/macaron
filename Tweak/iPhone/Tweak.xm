@@ -19,11 +19,9 @@ CGFloat blurAlpha = 1.0;
 	if (self.dockImageView != nil) {
 		[self.dockImageView setFrame:self.backgroundView.bounds];
 		[self.visualEffectView setFrame:self.dockImageView.bounds];
+		[[self dockImageView].layer setCornerRadius:[self.backgroundView layer].cornerRadius];
 		return;
 	}
-
-	// backgroundView.layer
-	[[self backgroundView].layer setMasksToBounds:YES];
 
 	// 画像の取得
 	NSData *data = ([GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] != nil) ? [GcImagePickerUtils dataFromDefaults: @"com.misakaproject.macaron" withKey: @"kDockImage"] : [NSData dataWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/default.png")]; //画像をNSDataで読み込む
@@ -34,7 +32,7 @@ CGFloat blurAlpha = 1.0;
 	if ((unsigned long)dataBuffer[0] == 71 && (unsigned long)dataBuffer[1] == 73 && (unsigned long)dataBuffer[2] == 70) [self.dockImageView setAnimatedImage:[FLAnimatedImage animatedImageWithGIFData:data]];
 	else [self.dockImageView setImage:[UIImage imageWithData:data]];
 	[self.dockImageView setContentMode:UIViewContentModeScaleAspectFill];
-	[self.dockImageView setClipsToBounds:YES];
+	[[self dockImageView].layer setMasksToBounds:YES];
 	[self.dockImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[self.backgroundView addSubview:self.dockImageView];
 
@@ -43,7 +41,6 @@ CGFloat blurAlpha = 1.0;
 	UIBlurEffect *blurEffect = (blurType == 1) ? [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular] : (blurType == 2) ? [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight] : [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 	self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 	[self.visualEffectView setAlpha:blurAlpha];
-	[self.visualEffectView setClipsToBounds:YES];
 	[self.visualEffectView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[self.dockImageView addSubview:self.visualEffectView];
 }
