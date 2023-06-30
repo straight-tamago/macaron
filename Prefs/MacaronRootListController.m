@@ -56,7 +56,7 @@
 	[self.titleLabel sizeToFit];
 
 	self.versionLabel = [[UILabel alloc] init];
-    [self.versionLabel setText:@"v1.0.0"];
+    [self.versionLabel setText:@"v1.0.1"];
     [self.versionLabel setFont:[UIFont monospacedDigitSystemFontOfSize:30 weight:UIFontWeightBold]];
     [self.versionLabel setTextColor:[UIColor secondaryLabelColor]];
 	[self.versionLabel setTextAlignment:NSTextAlignmentCenter];
