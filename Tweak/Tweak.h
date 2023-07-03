@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 #import <GcUniversal/GcImagePickerUtils.h>
-#import <Cephei/HBPreferences.h>
+#import <Cephei/Cephei.h>
 #import "./Classes/FLAnimatedImage.h"
 
 @interface SBDockView : UIView
