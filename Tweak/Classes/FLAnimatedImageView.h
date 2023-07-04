@@ -3,7 +3,7 @@
 //  Flipboard
 //
 //  Created by Raphael Schaad on 7/8/13.
-//  Copyright (c) Flipboard. All rights reserved.
+//  Copyright (c) 2013-2015 Flipboard. All rights reserved.
 //
 
 
@@ -29,8 +29,20 @@
 @property (nonatomic, strong, readonly) UIImage *currentFrame;
 @property (nonatomic, assign, readonly) NSUInteger currentFrameIndex;
 
-// The animation runloop mode. Enables playback during scrolling by allowing timer events (i.e. animation) with NSRunLoopCommonModes.
-// To keep scrolling smooth on single-core devices such as iPhone 3GS/4 and iPod Touch 4th gen, the default run loop mode is NSDefaultRunLoopMode. Otherwise, the default is NSDefaultRunLoopMode.
-@property (nonatomic, copy) NSRunLoopMode runLoopMode;
+#if defined(DEBUG) && DEBUG
+// Only intended to report internal state for debugging
+@property (nonatomic, weak) id<FLAnimatedImageViewDebugDelegate> debug_delegate;
+#endif
 
 @end
+
+
+#if defined(DEBUG) && DEBUG
+@protocol FLAnimatedImageViewDebugDelegate <NSObject>
+
+@optional
+
+- (void)debug_animatedImageView:(FLAnimatedImageView *)animatedImageView waitingForFrame:(NSUInteger)index duration:(NSTimeInterval)duration;
+
+@end
+#endif

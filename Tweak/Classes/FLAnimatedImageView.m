@@ -3,21 +3,13 @@
 //  Flipboard
 //
 //  Created by Raphael Schaad on 7/8/13.
-//  Copyright (c) Flipboard. All rights reserved.
+//  Copyright (c) 2013-2015 Flipboard. All rights reserved.
 //
 
 
 #import "FLAnimatedImageView.h"
 #import "FLAnimatedImage.h"
 #import <QuartzCore/QuartzCore.h>
-
-
-#if defined(DEBUG) && DEBUG
-@protocol FLAnimatedImageViewDebugDelegate <NSObject>
-@optional
-- (void)debug_animatedImageView:(FLAnimatedImageView *)animatedImageView waitingForFrame:(NSUInteger)index duration:(NSTimeInterval)duration;
-@end
-#endif
 
 
 @interface FLAnimatedImageView ()
@@ -30,69 +22,13 @@
 @property (nonatomic, assign) NSTimeInterval accumulator;
 @property (nonatomic, strong) CADisplayLink *displayLink;
 
-@property (nonatomic, assign) BOOL shouldAnimate; // Before checking this value, call `-updateShouldAnimate` whenever the animated image or visibility (window, superview, hidden, alpha) has changed.
+@property (nonatomic, assign) BOOL shouldAnimate; // Before checking this value, call `-updateShouldAnimate` whenever the animated image, window or superview has changed.
 @property (nonatomic, assign) BOOL needsDisplayWhenImageBecomesAvailable;
-
-#if defined(DEBUG) && DEBUG
-@property (nonatomic, weak) id<FLAnimatedImageViewDebugDelegate> debug_delegate;
-#endif
 
 @end
 
 
 @implementation FLAnimatedImageView
-@synthesize runLoopMode = _runLoopMode;
-
-#pragma mark - Initializers
-
-// -initWithImage: isn't documented as a designated initializer of UIImageView, but it actually seems to be.
-// Using -initWithImage: doesn't call any of the other designated initializers.
-- (instancetype)initWithImage:(UIImage *)image
-{
-    self = [super initWithImage:image];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-// -initWithImage:highlightedImage: also isn't documented as a designated initializer of UIImageView, but it doesn't call any other designated initializers.
-- (instancetype)initWithImage:(UIImage *)image highlightedImage:(UIImage *)highlightedImage
-{
-    self = [super initWithImage:image highlightedImage:highlightedImage];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
-}
-
-- (void)commonInit
-{
-    self.runLoopMode = [[self class] defaultRunLoopMode];
-    
-    if (@available(iOS 11.0, *)) {
-        self.accessibilityIgnoresInvertColors = YES;
-    }
-}
-
 
 #pragma mark - Accessors
 #pragma mark Public
@@ -101,16 +37,8 @@
 {
     if (![_animatedImage isEqual:animatedImage]) {
         if (animatedImage) {
-            if (super.image) {
-                // UIImageView's `setImage:` will internally call its layer's `setContentsTransform:` based on the `image.imageOrientation`.
-                // The `contentsTransform` will affect layer rendering rotation because the CGImage's bitmap buffer does not actually take rotation.
-                // However, when calling `setImage:nil`, this `contentsTransform` will not be reset to identity.
-                // Further animation frame will be rendered as rotated. So we must set it to the poster image to clear the previous state.
-                // See more here: https://github.com/Flipboard/FLAnimatedImage/issues/100
-                super.image = animatedImage.posterImage;
-                // Clear out the image.
-                super.image = nil;
-            }
+            // Clear out the image.
+            super.image = nil;
             // Ensure disabled highlighting; it's not supported (see `-setHighlighted:`).
             super.highlighted = NO;
             // UIImageView seems to bypass some accessors when calculating its intrinsic content size, so this ensures its intrinsic content size comes from the animated image.
@@ -179,30 +107,6 @@
     }
 }
 
-- (void)setAlpha:(CGFloat)alpha
-{
-    [super setAlpha:alpha];
-
-    [self updateShouldAnimate];
-    if (self.shouldAnimate) {
-        [self startAnimating];
-    } else {
-        [self stopAnimating];
-    }
-}
-
-- (void)setHidden:(BOOL)hidden
-{
-    [super setHidden:hidden];
-
-    [self updateShouldAnimate];
-    if (self.shouldAnimate) {
-        [self startAnimating];
-    } else {
-        [self stopAnimating];
-    }
-}
-
 
 #pragma mark Auto Layout
 
@@ -251,45 +155,6 @@
 
 #pragma mark Animating Images
 
-- (NSTimeInterval)frameDelayGreatestCommonDivisor
-{
-    // Presision is set to half of the `kFLAnimatedImageDelayTimeIntervalMinimum` in order to minimize frame dropping.
-    const NSTimeInterval kGreatestCommonDivisorPrecision = 2.0 / kFLAnimatedImageDelayTimeIntervalMinimum;
-
-    NSArray *const delays = self.animatedImage.delayTimesForIndexes.allValues;
-
-    // Scales the frame delays by `kGreatestCommonDivisorPrecision`
-    // then converts it to an UInteger for in order to calculate the GCD.
-    NSUInteger scaledGCD = lrint([delays.firstObject floatValue] * kGreatestCommonDivisorPrecision);
-    for (NSNumber *value in delays) {
-        scaledGCD = gcd(lrint([value floatValue] * kGreatestCommonDivisorPrecision), scaledGCD);
-    }
-
-    // Reverse to scale to get the value back into seconds.
-    return (double)scaledGCD / kGreatestCommonDivisorPrecision;
-}
-
-
-static NSUInteger gcd(NSUInteger a, NSUInteger b)
-{
-    // http://en.wikipedia.org/wiki/Greatest_common_divisor
-    if (a < b) {
-        return gcd(b, a);
-    } else if (a == b) {
-        return b;
-    }
-
-    while (true) {
-        const NSUInteger remainder = a % b;
-        if (remainder == 0) {
-            return b;
-        }
-        a = b;
-        b = remainder;
-    }
-}
-
-
 - (void)startAnimating
 {
     if (self.animatedImage) {
@@ -302,16 +167,18 @@ static NSUInteger gcd(NSUInteger a, NSUInteger b)
             FLWeakProxy *weakProxy = [FLWeakProxy weakProxyForObject:self];
             self.displayLink = [CADisplayLink displayLinkWithTarget:weakProxy selector:@selector(displayDidRefresh:)];
             
-            [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:self.runLoopMode];
-        }
-
-        if (@available(iOS 10, *)) {
-            // Adjusting preferredFramesPerSecond allows us to skip unnecessary calls to displayDidRefresh: when showing GIFs
-            // that don't animate quickly. Use ceil to err on the side of too many FPS so we don't miss a frame transition moment.
-            self.displayLink.preferredFramesPerSecond = ceil(1.0 / [self frameDelayGreatestCommonDivisor]);
-        } else {
-            const NSTimeInterval kDisplayRefreshRate = 60.0; // 60Hz
-            self.displayLink.frameInterval = MAX([self frameDelayGreatestCommonDivisor] * kDisplayRefreshRate, 1);
+            NSString *mode = NSDefaultRunLoopMode;
+            // Enable playback during scrolling by allowing timer events (i.e. animation) with `NSRunLoopCommonModes`.
+            // But too keep scrolling smooth, only do this for hardware with more than one core and otherwise keep it at the default `NSDefaultRunLoopMode`.
+            // The only devices with single-core chips (supporting iOS 6+) are iPhone 3GS/4 and iPod Touch 4th gen.
+            // Key off `activeProcessorCount` (as opposed to `processorCount`) since the system could shut down cores in certain situations.
+            if ([NSProcessInfo processInfo].activeProcessorCount > 1) {
+                mode = NSRunLoopCommonModes;
+            }
+            [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:mode];
+            
+            // Note: The display link's `.frameInterval` value of 1 (default) means getting callbacks at the refresh rate of the display (~60Hz).
+            // Setting it to 2 divides the frame rate by 2 and hence calls back at every other frame.
         }
         self.displayLink.paused = NO;
     } else {
@@ -319,15 +186,6 @@ static NSUInteger gcd(NSUInteger a, NSUInteger b)
     }
 }
 
-- (void)setRunLoopMode:(NSRunLoopMode)runLoopMode
-{
-    if (![@[NSDefaultRunLoopMode, NSRunLoopCommonModes] containsObject:runLoopMode]) {
-        NSAssert(NO, @"Invalid run loop mode: %@", runLoopMode);
-        _runLoopMode = [[self class] defaultRunLoopMode];
-    } else {
-        _runLoopMode = runLoopMode;
-    }
-}
 
 - (void)stopAnimating
 {
@@ -366,11 +224,10 @@ static NSUInteger gcd(NSUInteger a, NSUInteger b)
 #pragma mark Animation
 
 // Don't repeatedly check our window & superview in `-displayDidRefresh:` for performance reasons.
-// Just update our cached value whenever the animated image or visibility (window, superview, hidden, alpha) is changed.
+// Just update our cached value whenever the animated image, window or superview is changed.
 - (void)updateShouldAnimate
 {
-    const BOOL isVisible = self.window && self.superview && ![self isHidden] && self.alpha > 0.0;
-    self.shouldAnimate = self.animatedImage && isVisible;
+    self.shouldAnimate = self.animatedImage && self.window && self.superview;
 }
 
 
@@ -379,29 +236,25 @@ static NSUInteger gcd(NSUInteger a, NSUInteger b)
     // If for some reason a wild call makes it through when we shouldn't be animating, bail.
     // Early return!
     if (!self.shouldAnimate) {
-        FLLog(FLLogLevelWarn, @"Trying to animate image when we shouldn't: %@", self);
+        FLLogWarn(@"Trying to animate image when we shouldn't: %@", self);
         return;
     }
     
-    NSNumber *_Nullable const delayTimeNumber = [self.animatedImage.delayTimesForIndexes objectForKey:@(self.currentFrameIndex)];
+    NSNumber *delayTimeNumber = [self.animatedImage.delayTimesForIndexes objectForKey:@(self.currentFrameIndex)];
     // If we don't have a frame delay (e.g. corrupt frame), don't update the view but skip the playhead to the next frame (in else-block).
-    if (delayTimeNumber != nil) {
-        const NSTimeInterval delayTime = [delayTimeNumber floatValue];
+    if (delayTimeNumber) {
+        NSTimeInterval delayTime = [delayTimeNumber floatValue];
         // If we have a nil image (e.g. waiting for frame), don't update the view nor playhead.
-        UIImage *_Nullable const image = [self.animatedImage imageLazilyCachedAtIndex:self.currentFrameIndex];
+        UIImage *image = [self.animatedImage imageLazilyCachedAtIndex:self.currentFrameIndex];
         if (image) {
-            FLLog(FLLogLevelVerbose, @"Showing frame %lu for animated image: %@", (unsigned long)self.currentFrameIndex, self.animatedImage);
+            FLLogVerbose(@"Showing frame %lu for animated image: %@", (unsigned long)self.currentFrameIndex, self.animatedImage);
             self.currentFrame = image;
             if (self.needsDisplayWhenImageBecomesAvailable) {
                 [self.layer setNeedsDisplay];
                 self.needsDisplayWhenImageBecomesAvailable = NO;
             }
             
-            if (@available(iOS 10, *)) {
-                self.accumulator += displayLink.targetTimestamp - CACurrentMediaTime();
-            } else {
-                self.accumulator += displayLink.duration * (NSTimeInterval)displayLink.frameInterval;
-            }
+            self.accumulator += displayLink.duration;
             
             // While-loop first inspired by & good Karma to: https://github.com/ondalabs/OLImageView/blob/master/OLImageView.m
             while (self.accumulator >= delayTime) {
@@ -425,26 +278,16 @@ static NSUInteger gcd(NSUInteger a, NSUInteger b)
                 self.needsDisplayWhenImageBecomesAvailable = YES;
             }
         } else {
-            FLLog(FLLogLevelDebug, @"Waiting for frame %lu for animated image: %@", (unsigned long)self.currentFrameIndex, self.animatedImage);
+            FLLogDebug(@"Waiting for frame %lu for animated image: %@", (unsigned long)self.currentFrameIndex, self.animatedImage);
 #if defined(DEBUG) && DEBUG
             if ([self.debug_delegate respondsToSelector:@selector(debug_animatedImageView:waitingForFrame:duration:)]) {
-                if (@available(iOS 10, *)) {
-                    [self.debug_delegate debug_animatedImageView:self waitingForFrame:self.currentFrameIndex duration:displayLink.targetTimestamp - CACurrentMediaTime()];
-                } else {
-                    [self.debug_delegate debug_animatedImageView:self waitingForFrame:self.currentFrameIndex duration:displayLink.duration * (NSTimeInterval)displayLink.frameInterval];
-                }
+                [self.debug_delegate debug_animatedImageView:self waitingForFrame:self.currentFrameIndex duration:(NSTimeInterval)self.displayLink.duration];
             }
 #endif
         }
     } else {
         self.currentFrameIndex++;
     }
-}
-
-+ (NSRunLoopMode)defaultRunLoopMode
-{
-    // Key off `activeProcessorCount` (as opposed to `processorCount`) since the system could shut down cores in certain situations.
-    return [NSProcessInfo processInfo].activeProcessorCount > 1 ? NSRunLoopCommonModes : NSDefaultRunLoopMode;
 }
 
 
