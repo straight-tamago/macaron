@@ -28,20 +28,19 @@
 
 	self.stackView = [[UIStackView alloc] init];
 	[self.stackView setAlpha:0.0];
-    [self.stackView setAxis:UILayoutConstraintAxisHorizontal];
-    [self.stackView setAlignment:UIStackViewAlignmentCenter];
-    [self.stackView setDistribution:UIStackViewDistributionEqualSpacing];
-    [self.headerView addSubview:self.stackView];
+	[self.stackView setAxis:UILayoutConstraintAxisHorizontal];;
+	[self.stackView setAlignment:UIStackViewAlignmentCenter];
+	[self.stackView setDistribution:UIStackViewDistributionEqualSpacing];
+	[self.stackView setSpacing:15];
+	[self.headerView addSubview:self.stackView];
 
 	[self.stackView setTranslatesAutoresizingMaskIntoConstraints:NO];
 	[NSLayoutConstraint activateConstraints:@[
-		[self.stackView.topAnchor constraintEqualToAnchor:self.headerView.topAnchor],
-		[self.stackView.leftAnchor constraintEqualToAnchor:self.headerView.leftAnchor constant:30],
-		[self.stackView.rightAnchor constraintEqualToAnchor:self.headerView.rightAnchor constant:-30],
-		[self.stackView.bottomAnchor constraintEqualToAnchor:self.headerView.bottomAnchor],
+		[self.stackView.centerXAnchor constraintEqualToAnchor:self.headerView.centerXAnchor],
+		[self.stackView.centerYAnchor constraintEqualToAnchor:self.headerView.centerYAnchor]
 	]];
 
-	self.iconView= [[UIImageView alloc] init];
+	self.iconView = [[UIImageView alloc] init];
     [self.iconView setFrame:CGRectMake(0, 0, 60, 60)];
 	[self.iconView setImage:[UIImage imageWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/icon.png")]];
     [self.iconView setContentMode:UIViewContentModeScaleAspectFit];
