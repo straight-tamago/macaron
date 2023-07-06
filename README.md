@@ -1,5 +1,5 @@
 # macaron
-Displays a photo in the background of the dock for iOS15,16.
+Displays a photo in the background of the dock for iOS14,15,16.
 (gif compatible)
 
 ![Macaron](https://github.com/straight-tamago/macaron/assets/50686545/97e87c2c-8d20-457a-bb02-b52353c21d5c)
