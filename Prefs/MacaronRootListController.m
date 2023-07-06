@@ -11,7 +11,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-    HBAppearanceSettings *appearanceSettings = [[HBAppearanceSettings alloc] init];
+        HBAppearanceSettings *appearanceSettings = [[HBAppearanceSettings alloc] init];
 	UIColor *defaultColor = [UIColor colorWithRed:109/255.0 green:174/255.0 blue:255/255.0 alpha:1.0];
 	appearanceSettings.tintColor = defaultColor;
 	appearanceSettings.navigationBarBackgroundColor = [UIColor clearColor];
@@ -19,9 +19,9 @@
 	appearanceSettings.largeTitleStyle = 1;
 	self.hb_appearanceSettings = appearanceSettings;
 
-    self.respringButton = [[UIBarButtonItem alloc] initWithTitle:@"Respring" style:UIBarButtonItemStylePlain target:self action:@selector(respring:)];
-    self.respringButton.tintColor = [UIColor secondaryLabelColor];
-    self.navigationItem.rightBarButtonItem = self.respringButton;
+        self.respringButton = [[UIBarButtonItem alloc] initWithTitle:@"Respring" style:UIBarButtonItemStylePlain target:self action:@selector(respring:)];
+        self.respringButton.tintColor = [UIColor secondaryLabelColor];
+        self.navigationItem.rightBarButtonItem = self.respringButton;
 
 	self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
 	[self.headerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -41,25 +41,25 @@
 	]];
 
 	self.iconView = [[UIImageView alloc] init];
-    [self.iconView setFrame:CGRectMake(0, 0, 60, 60)];
+        [self.iconView setFrame:CGRectMake(0, 0, 60, 60)];
 	[self.iconView setImage:[UIImage imageWithContentsOfFile:ROOT_PATH_NS(@"/Library/PreferenceBundles/Macaron.bundle/icon.png")]];
-    [self.iconView setContentMode:UIViewContentModeScaleAspectFit];
-    [self.stackView addArrangedSubview:self.iconView];
+        [self.iconView setContentMode:UIViewContentModeScaleAspectFit];
+        [self.stackView addArrangedSubview:self.iconView];
 
 	self.titleLabel = [[UILabel alloc] init];
-    [self.titleLabel setText:@"Macaron"];
-    [self.titleLabel setFont:[UIFont monospacedDigitSystemFontOfSize:40 weight:UIFontWeightBold]];
-    [self.titleLabel setTextColor:[UIColor labelColor]];
+        [self.titleLabel setText:@"Macaron"];
+        [self.titleLabel setFont:[UIFont monospacedDigitSystemFontOfSize:40 weight:UIFontWeightBold]];
+        [self.titleLabel setTextColor:[UIColor labelColor]];
 	[self.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.stackView addArrangedSubview:self.titleLabel];
+        [self.stackView addArrangedSubview:self.titleLabel];
 	[self.titleLabel sizeToFit];
 
 	self.versionLabel = [[UILabel alloc] init];
-    [self.versionLabel setText:@"v1.0.1"];
-    [self.versionLabel setFont:[UIFont monospacedDigitSystemFontOfSize:30 weight:UIFontWeightBold]];
-    [self.versionLabel setTextColor:[UIColor secondaryLabelColor]];
+        [self.versionLabel setText:@"v1.0.1"];
+        [self.versionLabel setFont:[UIFont monospacedDigitSystemFontOfSize:30 weight:UIFontWeightBold]];
+        [self.versionLabel setTextColor:[UIColor secondaryLabelColor]];
 	[self.versionLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.stackView addArrangedSubview:self.versionLabel];
+        [self.stackView addArrangedSubview:self.versionLabel];
 	[self.versionLabel sizeToFit];
 }
 
@@ -76,7 +76,7 @@
 }
 
 - (void)respring:(id)sender {
-	// Rootlessだとkillallのディレクトリが違うので注意が必要。
+    // Rootlessだとkillallのディレクトリが違うので注意が必要。
     pid_t pid;
     const char* args[] = {"killall", "SpringBoard", NULL};
     if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/killall"]) posix_spawn(&pid, "usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
