@@ -17,4 +17,3 @@ iPhone & iPad running iOS14 or later
 ## Credits
   - Background Image Hook
     - [MrGcGamer](https://twitter.com/MrGcGamer)
-@sugiuta
